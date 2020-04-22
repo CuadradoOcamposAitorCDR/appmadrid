@@ -14,6 +14,14 @@
         <action
             android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
             app:destination="@id/nav_home_second" />
+        <action
+            android:id="@+id/action_nav_inicio_to_nav_buscar"
+            app:destination="@id/nav_buscar"
+            app:popUpTo="@id/nav_inicio" />
+        <action
+            android:id="@+id/action_nav_inicio_to_nav_cuenta"
+            app:destination="@id/nav_cuenta"
+            app:popUpTo="@id/nav_inicio" />
     </fragment>
     <fragment
         android:id="@+id/nav_home_second"
