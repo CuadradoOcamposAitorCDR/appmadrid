@@ -6,12 +6,12 @@ import java.util.GregorianCalendar;
 class Favoritos {
     private String titulo, distrito;
     private Date fechaInicio;
-    private boolean gratuito, eliminar;
+    private boolean gratuito;
 
     public Favoritos() {
     }
 
-    public Favoritos(String titulo, String distrito, int agno, int mes, int dia, boolean gratuito, boolean eliminar) {
+    public Favoritos(String titulo, String distrito, int agno, int mes, int dia, boolean gratuito) {
         this.titulo = titulo;
         this.distrito = distrito;
 
@@ -19,7 +19,6 @@ class Favoritos {
         fechaInicio=fecha.getTime();
 
         this.gratuito = gratuito;
-        this.eliminar = eliminar;
     }
 
     public String getTitulo() {
@@ -52,13 +51,5 @@ class Favoritos {
 
     public void setGratuito(boolean gratuito) {
         this.gratuito = gratuito;
-    }
-
-    public boolean isEliminar() {
-        return eliminar;
-    }
-
-    public void setEliminar(boolean eliminar) {
-        this.eliminar = eliminar;
     }
 }

@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -57,12 +58,10 @@ public class InicioFragment extends Fragment {
         return root;*/
         View view = inflater.inflate(R.layout.fragment_inicio, container, false);
 
-
-
         favoritosList=new ArrayList<>();
-        favoritosList.add(new Favoritos("Que bien cuando amanece","Arganzuela", 2020,5,02,true,false));
-        favoritosList.add(new Favoritos("Lo más interesante","Moratalaz", 2020,5,24,true,true));
-        favoritosList.add(new Favoritos("Esto me aburre","Centro", 2020,6,10,true,false));
+        favoritosList.add(new Favoritos("Que bien cuando amanece","Arganzuela", 2020,5,02,true));
+        favoritosList.add(new Favoritos("Lo más interesante","Moratalaz", 2020,5,24,false));
+        favoritosList.add(new Favoritos("Esto me aburre","Centro", 2020,6,10,true));
 
         miAdaptadorFavoritos adaptadorFavoritos = new miAdaptadorFavoritos(this.getActivity(),
                 R.layout.favorito_item,
@@ -71,8 +70,7 @@ public class InicioFragment extends Fragment {
         listaFavoritos= (ListView) view.findViewById(R.id.listViewFavoritos);
         listaFavoritos.setAdapter(adaptadorFavoritos);
 
-
-       listaFavoritos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listaFavoritos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 calendario=listaFavoritos.getChildAt(position).findViewById(R.id.imageView_calendarioFavorito);

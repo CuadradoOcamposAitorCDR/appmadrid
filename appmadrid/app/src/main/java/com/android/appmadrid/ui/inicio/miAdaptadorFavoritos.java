@@ -41,15 +41,12 @@ class miAdaptadorFavoritos extends ArrayAdapter<Favoritos> {
 
         //Obtener la información del elemento de la lista que estoy iteranto en el momento
         Favoritos elementoActual=favoritosList.get(position);
-        /*Iterator itr=favoritosList.iterator();*/
 
         //Rescatar los elementos de la IU (interfaz usuario) de la plantilla
         TextView textViewTitulo=v.findViewById(R.id.textView_tituloFavorito);
         TextView textViewDistrito=v.findViewById(R.id.textView_distritoFavorito);
         TextView textViewFecha=v.findViewById(R.id.textView_fechaFavorito);
         TextView textViewPrecio=v.findViewById(R.id.textView_precioFavorito);
-        ImageView imageViewEliminar=v.findViewById(R.id.imageView_eliminarFavorito);
-        ImageView imageViewCalendario=v.findViewById(R.id.imageView_calendarioFavorito);
 
         //Hacer un set de la info del elemento Actual en los elementos de la IU
         textViewTitulo.setText(elementoActual.getTitulo());
@@ -65,17 +62,6 @@ class miAdaptadorFavoritos extends ArrayAdapter<Favoritos> {
         }else{
             textViewPrecio.setText("De pago");
         }
-
-        /*while (itr.hasNext()){
-            Favoritos elementoEliminar= (Favoritos) itr.next();
-            if(elementoEliminar.isEliminar()) {
-                itr.remove();
-                break;
-            }
-        }
-       if(elementoActual.isEliminar()){
-
-       }*/
         return v;
     }
 
