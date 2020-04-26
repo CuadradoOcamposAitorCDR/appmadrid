@@ -42,6 +42,7 @@ public class InicioFragment extends Fragment {
     ListView listaFavoritos;
     List<Favoritos> favoritosList;
     private ImageView calendario;
+    private ImageView eliminar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -65,14 +66,14 @@ public class InicioFragment extends Fragment {
         favoritosList.add(new Favoritos("Lo más interesante","Moratalaz", 2020,5,24,false));
         favoritosList.add(new Favoritos("Esto me aburre","Centro", 2020,6,10,true));
 
-        miAdaptadorFavoritos adaptadorFavoritos = new miAdaptadorFavoritos(this.getActivity(),
+        final miAdaptadorFavoritos adaptadorFavoritos = new miAdaptadorFavoritos(this.getActivity(),
                 R.layout.favorito_item,
                 favoritosList);
 
         listaFavoritos= (ListView) view.findViewById(R.id.listViewFavoritos);
         listaFavoritos.setAdapter(adaptadorFavoritos);
 
-        //Click en Calendario para llamar a la app del Calendario
+        //Click en Calendario para llamar a la app del Calendario y en la Cruz para eleminar el elemento de esa posición
         listaFavoritos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -86,6 +87,17 @@ public class InicioFragment extends Fragment {
                                 .putExtra(CalendarContract.Events.EVENT_LOCATION,favoritosList.get(position).getDistrito())
                                 .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,favoritosList.get(position).getFechaInicio().getTime());
                         startActivity(intentCalendario);
+                    }
+                });
+
+                eliminar=listaFavoritos.getChildAt(position).findViewById(R.id.imageView_eliminarFavorito);
+                eliminar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        favoritosList.remove(position);
+                        //Falta meter un método del modelo que coja el id y lo elimine también de la tabla de la base de datos
+                        adaptadorFavoritos.notifyDataSetChanged();
+                        Toast.makeText(getActivity(), "Hay "+ favoritosList.size()+" elementos", Toast.LENGTH_SHORT).show();
                     }
                 });
            }
