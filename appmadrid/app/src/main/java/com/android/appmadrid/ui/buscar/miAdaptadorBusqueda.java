@@ -18,16 +18,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-class miAdaptadorBusqueda extends ArrayAdapter<Busqueda> {
+class miAdaptadorBusqueda extends ArrayAdapter<Evento> {
     Context ctx;
     int layoutTemplate;
-    List<Busqueda> busquedaList;
+    List<Evento> eventoList;
 
-    public miAdaptadorBusqueda(@NonNull Context context, int resource, @NonNull List<Busqueda> objects) {
+    public miAdaptadorBusqueda(@NonNull Context context, int resource, @NonNull List<Evento> objects) {
         super(context, resource, objects);
         this.ctx=context;
         this.layoutTemplate=resource;
-        this.busquedaList=objects;
+        this.eventoList =objects;
     }
 
     @NonNull
@@ -37,7 +37,7 @@ class miAdaptadorBusqueda extends ArrayAdapter<Busqueda> {
         View v= LayoutInflater.from(ctx).inflate(layoutTemplate,parent,false);
 
         //Obtener la información del elemento de la lista que estoy iteranto en el momento
-        Busqueda elementoActual=busquedaList.get(position);
+        Evento elementoActual= eventoList.get(position);
 
         //Rescatar los elementos de la IU (interfaz usuario) de la plantilla
         TextView textViewTitulo=v.findViewById(R.id.textView_tituloBusqueda);

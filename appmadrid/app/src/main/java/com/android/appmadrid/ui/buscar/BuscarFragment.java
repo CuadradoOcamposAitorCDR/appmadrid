@@ -7,20 +7,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.android.appmadrid.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +21,7 @@ public class BuscarFragment extends Fragment {
 
     //private BuscarViewModel buscarViewModel;
     ListView listaBusqueda;
-    List<Busqueda> busquedaList;
+    List<Evento> eventoList;
     ImageView estrellaOn;
     ImageView estrellaOff;
 
@@ -49,7 +42,7 @@ public class BuscarFragment extends Fragment {
         return root;*/
         View view = inflater.inflate(R.layout.fragment_buscar, container, false);
 
-        //Botón que llama a Dialogo Busqueda
+        //Botón que llama a Dialogo Evento
         FloatingActionButton botonBuscar = (FloatingActionButton) view.findViewById(R.id.botonBuscar);
         botonBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,15 +52,15 @@ public class BuscarFragment extends Fragment {
             }
         });
 
-        //Array de objeto Busqueda
-        busquedaList=new ArrayList<>();
-        busquedaList.add(new Busqueda("Que bien cuando amanece","Arganzuela", 2020,5,02,true,false));
-        busquedaList.add(new Busqueda("Buenos días buenas tardes","Serrano", 2020,6,12,true,true));
-        busquedaList.add(new Busqueda("Por fin se acaba","Vallecas", 2020,5,30,false,false));
+        //Array de objeto Evento
+        eventoList =new ArrayList<>();
+        eventoList.add(new Evento("Que bien cuando amanece","Arganzuela", 2020,5,02,true,false));
+        eventoList.add(new Evento("Buenos días buenas tardes","Serrano", 2020,6,12,true,true));
+        eventoList.add(new Evento("Por fin se acaba","Vallecas", 2020,5,30,false,false));
 
         final miAdaptadorBusqueda adaptadorBusqueda = new miAdaptadorBusqueda(this.getActivity(),
                 R.layout.busqueda_item,
-                busquedaList);
+                eventoList);
 
         listaBusqueda= (ListView) view.findViewById(R.id.listViewBusqueda);
         listaBusqueda.setAdapter(adaptadorBusqueda);
@@ -80,7 +73,7 @@ public class BuscarFragment extends Fragment {
                 estrellaOn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        busquedaList.get(position).setFavorito(false);
+                        eventoList.get(position).setFavorito(false);
                         adaptadorBusqueda.notifyDataSetChanged();
                     }
                 });
@@ -89,7 +82,7 @@ public class BuscarFragment extends Fragment {
                 estrellaOff.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        busquedaList.get(position).setFavorito(true);
+                        eventoList.get(position).setFavorito(true);
                         adaptadorBusqueda.notifyDataSetChanged();
                     }
                 });

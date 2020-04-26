@@ -45,7 +45,7 @@ public class dialogoNuevaBusqueda extends DialogFragment {
         builder.setTitle("Búsqueda")
                 .setPositiveButton("Buscar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Toast.makeText(getActivity(), "Busqueda realizada", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Búsqueda realizada", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 })

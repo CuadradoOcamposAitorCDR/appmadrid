@@ -3,12 +3,12 @@ package com.android.appmadrid.ui.buscar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-class Busqueda {
+class Evento {
     private String titulo, distrito;
     private Date fechaInicio;
     private boolean gratuito,favorito;
 
-    public Busqueda(){
+    public Evento(){
     }
 
     public String getTitulo() {
@@ -51,7 +51,7 @@ class Busqueda {
         this.favorito = favorito;
     }
 
-    public Busqueda(String titulo, String distrito, int agno, int mes, int dia, boolean gratuito, boolean favorito) {
+    public Evento(String titulo, String distrito, int agno, int mes, int dia, boolean gratuito, boolean favorito) {
         this.titulo = titulo;
         this.distrito = distrito;
 
