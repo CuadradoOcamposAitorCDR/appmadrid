@@ -8,6 +8,21 @@
     <string name="introduce_contrasena">Constraseña</string>
     <string name="introduce_mail">Mail</string>
     <string name="cancelar">Cancelar</string>
+    <string name="busqueda_titulo">Título</string>
+    <string name="busqueda_fecha">DD/MM/AAAA</string>
+
+    <string-array name="distritos_array">
+        <item>Arganzuela</item>
+        <item>Moratalaz</item>
+        <item>Centro</item>
+    </string-array>
+
+    <string-array name="gratuito_array">
+        <item>Gratis</item>
+        <item>De Pago</item>
+    </string-array>
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

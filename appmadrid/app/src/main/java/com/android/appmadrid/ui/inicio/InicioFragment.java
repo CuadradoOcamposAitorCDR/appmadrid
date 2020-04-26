@@ -25,6 +25,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.appmadrid.AplicacionActivity;
+import com.android.appmadrid.Modelo;
 import com.android.appmadrid.R;
 
 import java.text.SimpleDateFormat;
@@ -56,8 +57,9 @@ public class InicioFragment extends Fragment {
             }
         });
         return root;*/
-        View view = inflater.inflate(R.layout.fragment_inicio, container, false);
 
+
+        View view = inflater.inflate(R.layout.fragment_inicio, container, false);
         favoritosList=new ArrayList<>();
         favoritosList.add(new Favoritos("Que bien cuando amanece","Arganzuela", 2020,5,02,true));
         favoritosList.add(new Favoritos("Lo más interesante","Moratalaz", 2020,5,24,false));
@@ -70,6 +72,7 @@ public class InicioFragment extends Fragment {
         listaFavoritos= (ListView) view.findViewById(R.id.listViewFavoritos);
         listaFavoritos.setAdapter(adaptadorFavoritos);
 
+        //Click en Calendario para llamar a la app del Calendario
         listaFavoritos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
