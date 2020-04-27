@@ -27,6 +27,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.appmadrid.AplicacionActivity;
 import com.android.appmadrid.Modelo;
 import com.android.appmadrid.R;
+import com.android.appmadrid.ui.buscar.Evento;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -40,7 +41,7 @@ public class InicioFragment extends Fragment {
 
    // private InicioViewModel inicioViewModel;
     ListView listaFavoritos;
-    List<Favoritos> favoritosList;
+    List<Evento> favoritosList;
     private ImageView calendario;
     private ImageView eliminar;
 
@@ -62,9 +63,9 @@ public class InicioFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_inicio, container, false);
         favoritosList=new ArrayList<>();
-        favoritosList.add(new Favoritos("Que bien cuando amanece","Arganzuela", 2020,5,02,true));
-        favoritosList.add(new Favoritos("Lo más interesante","Moratalaz", 2020,5,24,false));
-        favoritosList.add(new Favoritos("Esto me aburre","Centro", 2020,6,10,true));
+        favoritosList.add(new Evento("Que bien cuando amanece","Arganzuela", 2020,5,02,true));
+        favoritosList.add(new Evento("Lo más interesante","Moratalaz", 2020,5,24,false));
+        favoritosList.add(new Evento("Esto me aburre","Centro", 2020,6,10,true));
 
         final miAdaptadorFavoritos adaptadorFavoritos = new miAdaptadorFavoritos(this.getActivity(),
                 R.layout.favorito_item,

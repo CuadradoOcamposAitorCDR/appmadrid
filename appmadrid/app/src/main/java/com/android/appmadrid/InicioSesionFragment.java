@@ -11,13 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class InicioSesionFragment extends Fragment {
     private TextView fragment_principal;
     private Button fragment_app;
     private ConexionFragmentsInicio mListener;
+    private EditText campo_nombre;
+    private EditText campo_pass;
 
     @Nullable
     @Override
@@ -31,12 +35,28 @@ public class InicioSesionFragment extends Fragment {
                 mListener.moveToFragment(fragmentPrincipal);
             }
         });;
+        campo_nombre = (EditText) view.findViewById(R.id.editText_usuario_inicio);
+        campo_pass = (EditText) view.findViewById(R.id.editText_contrasena_inicio);
         fragment_app= (Button) view.findViewById(R.id.button_inicio);
         fragment_app.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (getActivity(), AplicacionActivity.class);
-                startActivity(intent);
+
+                String nombre = campo_nombre.getText().toString();
+                String pass = campo_pass.getText().toString();
+
+                Modelo modelo = Modelo.getModelo(getActivity());
+
+                if (modelo.comprobarUsuario(nombre,pass)){
+
+                    Intent intent = new Intent (getActivity(), AplicacionActivity.class);
+                    startActivity(intent);
+
+                }else{
+                    Toast.makeText(getActivity(), "Campos incorrectos", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });;
         return view;

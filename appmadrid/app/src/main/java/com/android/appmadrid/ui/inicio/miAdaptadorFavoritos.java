@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.appmadrid.R;
+import com.android.appmadrid.ui.buscar.Evento;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,12 +22,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-class miAdaptadorFavoritos extends ArrayAdapter<Favoritos> {
+class miAdaptadorFavoritos extends ArrayAdapter<Evento> {
     Context ctx;
     int layoutTemplate;
-    List<Favoritos> favoritosList;
+    List<Evento> favoritosList;
 
-    public miAdaptadorFavoritos(@NonNull Context context, int resource, @NonNull List<Favoritos> objects) {
+    public miAdaptadorFavoritos(@NonNull Context context, int resource, @NonNull List<Evento> objects) {
         super(context, resource, objects);
         this.ctx=context;
         this.layoutTemplate=resource;
@@ -40,7 +41,7 @@ class miAdaptadorFavoritos extends ArrayAdapter<Favoritos> {
         View v= LayoutInflater.from(ctx).inflate(layoutTemplate,parent,false);
 
         //Obtener la información del elemento de la lista que estoy iteranto en el momento
-        Favoritos elementoActual=favoritosList.get(position);
+        Evento elementoActual=favoritosList.get(position);
 
         //Rescatar los elementos de la IU (interfaz usuario) de la plantilla
         TextView textViewTitulo=v.findViewById(R.id.textView_tituloFavorito);

@@ -53,7 +53,8 @@ public class Modelo extends SQLiteOpenHelper {
         //de momento no lo voy a usar esto es para actualizar la base de datos
         //a una nueva version
     }
-    public void consultar(){
+    public void consultar()
+    {
 
         SQLiteDatabase db = modelo.getReadableDatabase();
 
@@ -71,16 +72,37 @@ public class Modelo extends SQLiteOpenHelper {
         }
         db.close();
     }
-    public void insertar(){
 
-
+    public void insertarUsuario(String nombre, String correo, String pass)
+    {
         SQLiteDatabase db = modelo.getWritableDatabase();
+        db.execSQL("INSERT INTO users (name,email,password) VALUES ('"+nombre+"','"+correo+"','"+pass+"')");
+        Log.d("==>","Usuario insertado");
+        db.close();
+    }
 
-        db.execSQL("INSERT INTO users (name,email,password) VALUES ('Juan','ejemplo@ejemplo.com','123456')");
-        Log.d("etiqueta","Insertado");
+    public Boolean comprobarUsuario(String nombre, String pass)
+    {
+        Boolean existe = null;
+
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        //Cursor sirve para navegar por la base de datos
+        Cursor c = db.rawQuery("SELECT * FROM 'users' WHERE name='"+nombre+"' AND password='"+pass+"'",null);
+
+        if (c.moveToFirst()){
+            existe = true;
+            String column_0= c.getString(0);
+            String column_1= c.getString(1);
+            String column_2= c.getString(2);
+            String column_3= c.getString(3);
+            Log.d("registro_1",column_0+" "+column_1+" "+column_2+" "+column_3);
+        }else{
+            existe = false;
+            Log.d("==>","No existe");
+        }
+
 
         db.close();
-
-
+        return existe;
     }
 }

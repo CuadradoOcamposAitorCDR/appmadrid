@@ -3,7 +3,7 @@ package com.android.appmadrid.ui.buscar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-class Evento {
+public class Evento {
     private String titulo, distrito;
     private Date fechaInicio;
     private boolean gratuito,favorito;
@@ -60,5 +60,15 @@ class Evento {
 
         this.gratuito = gratuito;
         this.favorito = favorito;
+    }
+
+    public Evento(String titulo, String distrito, int agno, int mes, int dia, boolean gratuito) {
+        this.titulo = titulo;
+        this.distrito = distrito;
+
+        GregorianCalendar fecha=new GregorianCalendar(agno,mes-1,dia);
+        fechaInicio=fecha.getTime();
+
+        this.gratuito = gratuito;
     }
 }
