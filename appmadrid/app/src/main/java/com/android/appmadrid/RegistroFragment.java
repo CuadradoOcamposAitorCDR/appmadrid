@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 
 public class RegistroFragment extends Fragment {
@@ -53,7 +53,11 @@ public class RegistroFragment extends Fragment {
 
                 Modelo modelo = Modelo.getModelo(getActivity());
                 modelo.insertarUsuario(nombre,correo,pass);
-                //modelo.consultar();
+
+                //Vuelta a la activity inicial
+                Fragment fragmentPrincipal = new PrincipalInicioRegistro();
+                mListener.moveToFragment(fragmentPrincipal);
+                Toast.makeText(getActivity(), "Registro realizado", Toast.LENGTH_SHORT).show();
 
             }
         });

@@ -22,20 +22,32 @@
         <item>De Pago</item>
     </string-array>
 
+    <string name="nav_header_title">Nombre usuario</string>
+    <string name="menu_inicio">Inicio</string>
+    <string name="menu_buscar">Buscar</string>
+    <string name="menu_cuenta">Cuenta</string>
 
+
+    <string name="usuarioCuenta">Cuenta:</string>
+    <string name="mailCuenta">Mail:</string>
+    <string name="cambioUsuario">Cambiar nombre de usuario</string>
+    <string name="cambioPassword">Cambiar contraseña</string>
+    <string name="cambioMail">Cambiar email de registro</string>
+
+    <string name="nuevoMail">Nuevo Mail</string>
+    <string name="nuevoUsuario">Nuevo Usuario</string>
+    <string name="nuevaPass">Nueva Contraseña</string>
+    <string name="passActual">Contraseña Actual</string>
+    <string name="passCambio">Contraseña</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_aplicacion">AplicacionActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Nombre usuario</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
-    <string name="menu_inicio">Inicio</string>
-    <string name="menu_buscar">Buscar</string>
-    <string name="menu_cuenta">Cuenta</string>
-
     <string name="home_second">Home Second</string>
+
+
 </resources>
