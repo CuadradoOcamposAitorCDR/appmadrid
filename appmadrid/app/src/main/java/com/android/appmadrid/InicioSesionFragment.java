@@ -47,9 +47,15 @@ public class InicioSesionFragment extends Fragment {
 
                 Modelo modelo = Modelo.getModelo(getActivity());
 
-                if (modelo.comprobarUsuario(nombre,pass)){
+                if (modelo.consultarUsuario(nombre,pass)){
 
-                    //Usuario user= new Usuario (id);
+                    //he comentado el modelo lo mas claro posible para que se entienda de lujo :D
+                    // aqui hay que crear el usuario con los singleton como en las cartas
+                    // y luego ya se puede ir a la aplicacion
+                    // se me han ocurrido unas cosas que estan de lujo ya te diré mañana
+                    //tu ve haciendo las cosas de cuenta y tal necesitaras el usuario creado:
+                    //String id = modelo.getIdUsuario(nombre,pass)
+                    //Usuario user=Usuario.getusuario(id);
 
                     Intent intent = new Intent (getActivity(), AplicacionActivity.class);
                     startActivity(intent);

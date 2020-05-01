@@ -4,9 +4,25 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import com.android.appmadrid.ui.buscar.Evento;
+
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 
 public class Modelo extends SQLiteOpenHelper {
 
@@ -53,12 +69,14 @@ public class Modelo extends SQLiteOpenHelper {
         //de momento no lo voy a usar esto es para actualizar la base de datos
         //a una nueva version
     }
-    public void consultar()
+
+    //===============Consultar Todos los usuarios============================
+    public void consultarTodosLosUsuarios()
     {
 
         SQLiteDatabase db = modelo.getReadableDatabase();
 
-        Cursor c = db.rawQuery("SELECT * FROM 'users'",null);
+        Cursor c = db.rawQuery("SELECT * FROM "+NOMBRE_TABLA_USUARIOS+"",null);
         if (c.moveToFirst()){
             do {
 
@@ -73,21 +91,23 @@ public class Modelo extends SQLiteOpenHelper {
         db.close();
     }
 
+    //===============Insertar Usuarios para lo de registrarse============================
     public void insertarUsuario(String nombre, String correo, String pass)
     {
         SQLiteDatabase db = modelo.getWritableDatabase();
-        db.execSQL("INSERT INTO users (name,email,password) VALUES ('"+nombre+"','"+correo+"','"+pass+"')");
+        db.execSQL("INSERT INTO "+NOMBRE_TABLA_USUARIOS+" (name,email,password) VALUES ('"+nombre+"','"+correo+"','"+pass+"')");
         Log.d("==>","Usuario insertado");
         db.close();
     }
 
-    public Boolean comprobarUsuario(String nombre, String pass)
+    //===============Consultar Usuario para el login============================
+    public Boolean consultarUsuario(String nombre, String pass)
     {
         Boolean existe = null;
 
         SQLiteDatabase db = modelo.getReadableDatabase();
         //Cursor sirve para navegar por la base de datos
-        Cursor c = db.rawQuery("SELECT * FROM 'users' WHERE name='"+nombre+"' AND password='"+pass+"'",null);
+        Cursor c = db.rawQuery("SELECT * FROM "+NOMBRE_TABLA_USUARIOS+" WHERE name='"+nombre+"' AND password='"+pass+"'",null);
 
         if (c.moveToFirst()){
             existe = true;
@@ -104,5 +124,214 @@ public class Modelo extends SQLiteOpenHelper {
 
         db.close();
         return existe;
+    }
+    //===============obtener id usuario para crear objeto de tipo usuario=======================
+    public String getIdUsuario(String nombre, String pass){
+        String id="";
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT id_user FROM "+NOMBRE_TABLA_USUARIOS+" WHERE name = "+nombre+" AND password = "+pass+" ",null);
+        if (c.moveToFirst()){
+            do {
+                id= c.getString(0);
+                Log.d("==>"," ID: "+id);
+            }while (c.moveToNext());
+        }
+        db.close();
+        return id;
+    }
+
+    //===============Comprobar si hay eventos en la base de datos y si no pues a rellenar del api Eventos============================
+    public void comprobarSiHayEventos(){
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM "+NOMBRE_TABLA_EVENTOS+"",null);
+        if (c.moveToFirst()==false) {
+            Log.d("==>","No hay eventos asi que a rellenar");
+            modelo.insertarEventos();
+        }
+        db.close();
+    }
+
+
+    //===============Insertar Eventos============================
+    private void insertarEventos(){
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                URL url = null;
+
+                try {
+
+                    url =  new URL("https://datos.madrid.es/egob/catalogo/206974-0-agenda-eventos-culturales-100.json");
+
+                    HttpURLConnection conexion = (HttpURLConnection) url.openConnection();
+
+                    if (conexion.getResponseCode() == 200){
+
+                        Log.d("==>","conexion correcta");
+                        InputStream stream = conexion.getInputStream();
+                        InputStreamReader reader = new InputStreamReader(stream,"UTF-8");
+
+                        String elString = IOUtils.toString(stream,"UTF-8");
+
+                        //Numero de eventos EN EL API
+                        int numeroEventos = (new JSONObject(elString).getJSONArray("@graph").length())-1;
+
+                        //inserción en base de datos:
+                        SQLiteDatabase db = modelo.getWritableDatabase();
+
+                        String title = "-";
+                        String place = "-";
+                        String Dstart = "-";
+                        String Dend = "-";
+                        String price = "-";
+
+                        if (numeroEventos >= 0){
+                            String codigo_postal = "";
+                            String localizacion = "";
+                            for (int i = 0; i < numeroEventos; i++) {
+
+                                JSONObject evento = new JSONObject(elString).getJSONArray("@graph").getJSONObject(i);
+
+                                title = evento.getString("title");
+                                Dstart = evento.getString("dtstart");
+                                Dend = evento.getString("dtend");
+                                price = String.valueOf(evento.getInt("free"));
+
+                                try {
+                                    //codigo_postal = evento.getJSONObject("address").getJSONObject("area").getString("postal-code");
+                                    localizacion = evento.getJSONObject("address").getJSONObject("area").getString("street-address");
+                                    //place = localizacion+" , "+codigo_postal;
+                                    place = localizacion;
+
+                                }catch (Exception e){
+                                    place = "-";
+                                }
+
+
+                                try{
+                                    db.execSQL("INSERT INTO "+NOMBRE_TABLA_EVENTOS+" (title,place,Dstart,Dend,price) VALUES ('"+title+"','"+place+"','"+Dstart+"', '"+Dend+"', '"+price+"')");
+                                    Log.d("==>","Evento numero: "+i+" insertado :D");
+                                }catch (Exception e){
+                                    Log.d("==>","Algun listo habrá metido unas comillas en el api");
+                                }
+
+                            }
+                        }else{
+                            Log.d("==>","No hay nada para insertar");
+                        }
+                        db.close();
+                        //============================
+
+                    }else {
+                        Log.d("==>","El codigo de estado no es 200 y eso es malo");
+                        Log.d("==>","es malo porque el 200 es el codigo http de que todo esta bien");
+                    }
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
+
+    //===============Consultar Eventos toda la tabla de eventos============================
+    public void consultarEventos()
+    {
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM "+NOMBRE_TABLA_EVENTOS+"",null);
+        if (c.moveToFirst()){
+            do {
+
+                String column_0= c.getString(0);
+                String column_1= c.getString(1);
+                String column_2= c.getString(2);
+                String column_3= c.getString(3);
+                String column_4= c.getString(4);
+                String column_5= c.getString(5);
+                Log.d("registro_1",column_0+" "+column_1+" "+column_2+" "+column_3+" "+column_4+" "+column_5);
+            }while (c.moveToNext());
+        }
+        db.close();
+    }
+
+    //===============Obtener Eventos en un array de objetos de tipo evento============================
+    //=============SIN TERMINAR===================================
+    // aqui estaria bien hacer una sobrecarga de métodos para buscar con parametros o sin ellos
+    public ArrayList<Evento> buscarEventos(){
+        ArrayList<Evento> listaDeEventos = new ArrayList<>();
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM "+NOMBRE_TABLA_EVENTOS+"",null);
+        if (c.moveToFirst()){
+            do {
+
+
+                String id_eventos= c.getString(0);
+                String title_eventos= c.getString(1);
+                String column_2= c.getString(2);
+                String column_3= c.getString(3);
+                String column_4= c.getString(4);
+                String column_5= c.getString(5);
+
+            }while (c.moveToNext());
+        }
+        db.close();
+        return listaDeEventos;
+    }
+
+    //=============Modificar usuario=============================
+    //============LOS MÉTODOS DE LA OPCIÓN DE CUENTA!!!==========
+    public void modificarNombreUsuario(String user, String id){
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET name = '"+user+"' WHERE id = "+id+"");
+        db.close();
+        Log.d("==>","Nombre modificado");
+    }
+    public void modificarEmailUsuario(String email, String id){
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET name = '"+email+"' WHERE id = "+id+"");
+        db.close();
+        Log.d("==>","Email modificado");
+    }
+    public void modificarPassUsuario(String pass, String id){
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET name = '"+pass+"' WHERE id = "+id+"");
+        db.close();
+        Log.d("==>","Pass modificado");
+    }
+
+    //==================insertar Favoritos======================
+    public void insertarFav(String userID, String eventID){
+        SQLiteDatabase db = modelo.getWritableDatabase();
+        db.execSQL("INSERT INTO "+NOMBRE_TABLA_FAVORITOS+" (id_user_fk, id_event_fk) VALUES ("+userID+","+eventID+")");
+        Log.d("==>","Evento insertado como favorito");
+        db.close();
+    }
+    //================eliminar Favorito=========================
+    public void eliminarFav(String userID, String eventID){
+        SQLiteDatabase db = modelo.getWritableDatabase();
+        db.execSQL("DELETE FROM "+NOMBRE_TABLA_FAVORITOS+" WHERE id_user_fk = "+userID+" AND id_event_fk = "+eventID+" ");
+        Log.d("==>","Evento eliminado de favorito");
+        db.close();
+    }
+
+    //==========Método para saber si un evento es favorito=======
+    public Boolean comprobarFavorito(String userID, String eventID){
+        Boolean favorito;
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        String query = "SELECT id_event_fk, id_user_fk FROM fav WHERE id_user_fk = "+userID+" AND id_event_fk = "+eventID+" ";
+        Cursor c = db.rawQuery(query,null);
+        if (c.moveToFirst()){
+            favorito = true;
+        }else{
+            favorito = false;
+        }
+        return favorito;
     }
 }
