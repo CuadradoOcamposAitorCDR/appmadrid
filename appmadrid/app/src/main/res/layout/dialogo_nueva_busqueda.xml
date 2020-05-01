@@ -7,37 +7,28 @@
     tools:context=".ui.buscar.dialogoNuevaBusqueda">
 
 
-    <Spinner
-        android:id="@+id/spinner_busquedaDistrito"
-        android:layout_width="140dp"
-        android:layout_height="45dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.866"
-        app:layout_constraintStart_toEndOf="@+id/editText_busquedaTitulo"
-        app:layout_constraintTop_toTopOf="@+id/editText_busquedaTitulo" />
-
     <EditText
         android:id="@+id/editText_busquedaFecha"
         android:layout_width="130dp"
         android:layout_height="45dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="108dp"
         android:ems="10"
         android:hint="@string/busqueda_fecha"
         android:inputType="date"
-        app:layout_constraintEnd_toEndOf="@+id/spinner_busquedaDistrito"
-        app:layout_constraintHorizontal_bias="0.907"
+        app:layout_constraintEnd_toEndOf="@+id/editText_busquedaTitulo"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/spinner_busquedaGratutito"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_busquedaDistrito" />
+        app:layout_constraintTop_toTopOf="@+id/spinner_busquedaGratutito" />
 
     <EditText
         android:id="@+id/editText_busquedaTitulo"
-        android:layout_width="130dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="323dp"
+        android:layout_height="46dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/busqueda_titulo"
         android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

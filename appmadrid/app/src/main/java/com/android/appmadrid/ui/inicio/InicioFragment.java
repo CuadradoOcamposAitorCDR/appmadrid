@@ -63,9 +63,9 @@ public class InicioFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_inicio, container, false);
         favoritosList=new ArrayList<>();
-        favoritosList.add(new Evento("Que bien cuando amanece","Arganzuela", 2020,5,02,true));
-        favoritosList.add(new Evento("Lo más interesante","Moratalaz", 2020,5,24,false));
-        favoritosList.add(new Evento("Esto me aburre","Centro", 2020,6,10,true));
+        favoritosList.add(new Evento("1","Que bien cuando amanece","Arganzuela", 2020,5,02,2020,5,13,true));
+        favoritosList.add(new Evento("2","Lo más interesante","Moratalaz", 2020,5,24,2020,6,01,false));
+        favoritosList.add(new Evento("3","Esto me aburre","Centro", 2020,6,10,2020,6,10,true));
 
         final miAdaptadorFavoritos adaptadorFavoritos = new miAdaptadorFavoritos(this.getActivity(),
                 R.layout.favorito_item,
@@ -85,7 +85,7 @@ public class InicioFragment extends Fragment {
                         Intent intentCalendario = new Intent(Intent.ACTION_INSERT)
                                 .setData(CalendarContract.Events.CONTENT_URI)
                                 .putExtra(CalendarContract.Events.TITLE,favoritosList.get(position).getTitulo())
-                                .putExtra(CalendarContract.Events.EVENT_LOCATION,favoritosList.get(position).getDistrito())
+                                .putExtra(CalendarContract.Events.EVENT_LOCATION,favoritosList.get(position).getCalle())
                                 .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,favoritosList.get(position).getFechaInicio().getTime());
                         startActivity(intentCalendario);
                     }

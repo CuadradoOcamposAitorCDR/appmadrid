@@ -54,9 +54,9 @@ public class BuscarFragment extends Fragment {
 
         //Array de objeto Evento
         eventoList =new ArrayList<>();
-        eventoList.add(new Evento("Que bien cuando amanece","Arganzuela", 2020,5,02,true,false));
-        eventoList.add(new Evento("Buenos días buenas tardes","Serrano", 2020,6,12,true,true));
-        eventoList.add(new Evento("Por fin se acaba","Vallecas", 2020,5,30,false,false));
+        eventoList.add(new Evento("1","Que bien cuando amanece","Arganzuela", 2020,5,02,2020,6,03,true,false));
+        eventoList.add(new Evento("2","Buenos días buenas tardes","Serrano", 2020,6,12,2020,6,12,true,true));
+        eventoList.add(new Evento("3","Por fin se acaba","Vallecas", 2020,5,30,2020,6,02,false,false));
 
         final miAdaptadorBusqueda adaptadorBusqueda = new miAdaptadorBusqueda(this.getActivity(),
                 R.layout.busqueda_item,

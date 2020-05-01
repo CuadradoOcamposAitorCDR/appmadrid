@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Evento {
-    private String titulo, distrito;
-    private Date fechaInicio;
+    private String idEvento,titulo, calle;
+    private Date fechaInicio,fechaFin;
     private boolean gratuito,favorito;
 
     public Evento(){
@@ -19,12 +19,12 @@ public class Evento {
         this.titulo = titulo;
     }
 
-    public String getDistrito() {
-        return distrito;
+    public String getCalle() {
+        return calle;
     }
 
-    public void setDistrito(String distrito) {
-        this.distrito = distrito;
+    public void setCalle(String distrito) {
+        this.calle = distrito;
     }
 
     public Date getFechaInicio() {
@@ -51,23 +51,47 @@ public class Evento {
         this.favorito = favorito;
     }
 
-    public Evento(String titulo, String distrito, int agno, int mes, int dia, boolean gratuito, boolean favorito) {
-        this.titulo = titulo;
-        this.distrito = distrito;
+    public String getIdEvento() {
+        return idEvento;
+    }
 
-        GregorianCalendar fecha=new GregorianCalendar(agno,mes-1,dia);
-        fechaInicio=fecha.getTime();
+    public void setIdEvento(String idEvento) {
+        this.idEvento = idEvento;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public Evento(String idEvento,String titulo, String calle, int agnoInicio, int mesInicio, int diaInicio, int agnoFin, int mesFin,int diaFin, boolean gratuito, boolean favorito) {
+        this.idEvento=idEvento;
+        this.titulo = titulo;
+        this.calle = calle;
+
+        GregorianCalendar fechaInicio=new GregorianCalendar(agnoInicio,mesInicio-1,diaInicio);
+        this.fechaInicio=fechaInicio.getTime();
+
+        GregorianCalendar fechaFin=new GregorianCalendar(agnoFin,mesFin-1,diaFin);
+        this.fechaFin=fechaFin.getTime();
 
         this.gratuito = gratuito;
         this.favorito = favorito;
     }
 
-    public Evento(String titulo, String distrito, int agno, int mes, int dia, boolean gratuito) {
+    public Evento(String idEvento, String titulo, String calle, int agnoInicio, int mesInicio, int diaInicio, int agnoFin, int mesFin, int diaFin, boolean gratuito) {
+        this.idEvento=idEvento;
         this.titulo = titulo;
-        this.distrito = distrito;
+        this.calle = calle;
 
-        GregorianCalendar fecha=new GregorianCalendar(agno,mes-1,dia);
-        fechaInicio=fecha.getTime();
+        GregorianCalendar fechaInicio=new GregorianCalendar(agnoInicio,mesInicio-1,diaInicio);
+        this.fechaInicio=fechaInicio.getTime();
+
+        GregorianCalendar fechaFin=new GregorianCalendar(agnoFin,mesFin-1,diaFin);
+        this.fechaFin=fechaFin.getTime();
 
         this.gratuito = gratuito;
     }

@@ -49,7 +49,7 @@ class miAdaptadorBusqueda extends ArrayAdapter<Evento> {
 
         //Hacer un set de la info del elemento Actual en los elementos de la IU
         textViewTitulo.setText(elementoActual.getTitulo());
-        textViewDistrito.setText(elementoActual.getDistrito());
+        textViewDistrito.setText(elementoActual.getCalle());
 
         Date fecha=elementoActual.getFechaInicio();
         DateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy");

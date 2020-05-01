@@ -58,11 +58,6 @@ public class dialogoNuevaBusqueda extends DialogFragment {
 
 
         //Spinner
-        Spinner spinnerDistrito=(Spinner) dialogview.findViewById(R.id.spinner_busquedaDistrito);
-        ArrayAdapter<CharSequence> adapterDistrito=ArrayAdapter.createFromResource(this.getActivity(),R.array.distritos_array, R.layout.support_simple_spinner_dropdown_item);
-        adapterDistrito.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinnerDistrito.setAdapter(adapterDistrito);
-
         Spinner spinnerGratuito=(Spinner) dialogview.findViewById(R.id.spinner_busquedaGratutito);
         ArrayAdapter<CharSequence> adapterGratuito=ArrayAdapter.createFromResource(this.getActivity(),R.array.gratuito_array, R.layout.support_simple_spinner_dropdown_item);
         adapterGratuito.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);

@@ -49,6 +49,8 @@ public class InicioSesionFragment extends Fragment {
 
                 if (modelo.comprobarUsuario(nombre,pass)){
 
+                    //Usuario user= new Usuario (id);
+
                     Intent intent = new Intent (getActivity(), AplicacionActivity.class);
                     startActivity(intent);
 
