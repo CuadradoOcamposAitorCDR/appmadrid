@@ -66,9 +66,7 @@ public class BuscarFragment extends Fragment {
        /* Bundle resultadoBusqueda=getActivity().getIntent().getExtras();
         eventoList= (List<Evento>) resultadoBusqueda.getArray("busquedaEventosPersonalizada");*/
 
-        /*eventoList.add(new Evento("1","Que bien cuando amanece","Arganzuela", 2020,5,02,2020,6,03,true,false));
-        eventoList.add(new Evento("2","Buenos días buenas tardes","Serrano", 2020,6,12,2020,6,12,true,true));
-        eventoList.add(new Evento("3","Por fin se acaba","Vallecas", 2020,5,30,2020,6,02,false,false));*/
+
         eventoList=modelo.buscarEventos();
 
         final miAdaptadorBusqueda adaptadorBusqueda = new miAdaptadorBusqueda(this.getActivity(),
@@ -77,30 +75,6 @@ public class BuscarFragment extends Fragment {
 
         listaBusqueda= (ListView) view.findViewById(R.id.listViewBusqueda1);
         listaBusqueda.setAdapter(adaptadorBusqueda);
-
-        //Click en Estrella para cambiarla y (en futuro) acceder a base datos
-        listaBusqueda.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                estrellaOn=listaBusqueda.getChildAt(position).findViewById(R.id.imageView_favoritoOn);
-                estrellaOn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        modelo.eliminarFav(idUser,eventoList.get(position).getIdEvento());
-                        adaptadorBusqueda.notifyDataSetChanged();
-                    }
-                });
-
-                estrellaOff=listaBusqueda.getChildAt(position).findViewById(R.id.imageView_favoritoOff);
-                estrellaOff.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        modelo.insertarFav(idUser,eventoList.get(position).getIdEvento());
-                        adaptadorBusqueda.notifyDataSetChanged();
-                    }
-                });
-            }
-        });
 
         return view;
     }

@@ -2,6 +2,8 @@ package com.android.appmadrid.ui.inicio;
 
 import android.content.Context;
 
+import android.content.Intent;
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.android.appmadrid.Modelo;
 import com.android.appmadrid.R;
+import com.android.appmadrid.Usuario;
 import com.android.appmadrid.ui.buscar.Evento;
 
 import java.text.DateFormat;
@@ -39,6 +43,9 @@ class miAdaptadorFavoritos extends ArrayAdapter<Evento> {
     //Se lanza automáticamente como si fuera un bucle por cada elemento que se reciba en objects
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View v= LayoutInflater.from(ctx).inflate(layoutTemplate,parent,false);
+        final Modelo modelo= Modelo.getModelo(ctx);
+        Usuario user=Usuario.construirUsuario();
+        final String idUser=user.getIdUsuario();
 
         //Obtener la información del elemento de la lista que estoy iteranto en el momento
         Evento elementoActual=favoritosList.get(position);
@@ -48,6 +55,8 @@ class miAdaptadorFavoritos extends ArrayAdapter<Evento> {
         TextView textViewDistrito=v.findViewById(R.id.textView_distritoFavorito);
         TextView textViewFecha=v.findViewById(R.id.textView_fechaFavorito);
         TextView textViewPrecio=v.findViewById(R.id.textView_precioFavorito);
+        ImageView imageViewCalendario=v.findViewById(R.id.imageView_calendarioFavorito);
+        ImageView imageViewEliminar=v.findViewById(R.id.imageView_eliminarFavorito);
 
         //Hacer un set de la info del elemento Actual en los elementos de la IU
         textViewTitulo.setText(elementoActual.getTitulo());
@@ -63,6 +72,29 @@ class miAdaptadorFavoritos extends ArrayAdapter<Evento> {
         }else{
             textViewPrecio.setText("De pago");
         }
+
+        imageViewCalendario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCalendario = new Intent(Intent.ACTION_INSERT)
+                        .setData(CalendarContract.Events.CONTENT_URI)
+                        .putExtra(CalendarContract.Events.TITLE,favoritosList.get(position).getTitulo())
+                        .putExtra(CalendarContract.Events.EVENT_LOCATION,favoritosList.get(position).getCalle())
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,favoritosList.get(position).getFechaInicio().getTime());
+                ctx.startActivity(intentCalendario);
+            }
+        });
+
+        imageViewEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modelo.eliminarFav(idUser,favoritosList.get(position).getIdEvento());
+                favoritosList.remove(position);
+                notifyDataSetChanged();
+            }
+        });
+
+
         return v;
     }
 
