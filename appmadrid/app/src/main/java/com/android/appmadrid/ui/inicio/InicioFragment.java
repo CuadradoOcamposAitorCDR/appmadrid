@@ -27,6 +27,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.appmadrid.AplicacionActivity;
 import com.android.appmadrid.Modelo;
 import com.android.appmadrid.R;
+import com.android.appmadrid.Usuario;
 import com.android.appmadrid.ui.buscar.Evento;
 
 import java.text.SimpleDateFormat;
@@ -62,6 +63,10 @@ public class InicioFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_inicio, container, false);
+        final Modelo modelo= Modelo.getModelo(getActivity());
+        Usuario user=Usuario.construirUsuario();
+        final String idUser=user.getIdUsuario();
+
         favoritosList=new ArrayList<>();
         favoritosList.add(new Evento("1","Que bien cuando amanece","Arganzuela", 2020,5,02,2020,5,13,true));
         favoritosList.add(new Evento("2","Lo más interesante","Moratalaz", 2020,5,24,2020,6,01,false));
@@ -96,7 +101,7 @@ public class InicioFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         favoritosList.remove(position);
-                        //Falta meter un método del modelo que coja el id y lo elimine también de la tabla de la base de datos
+                        modelo.eliminarFav(idUser,favoritosList.get(position).getIdEvento());
                         adaptadorFavoritos.notifyDataSetChanged();
                         Toast.makeText(getActivity(), "Hay "+ favoritosList.size()+" elementos", Toast.LENGTH_SHORT).show();
                     }

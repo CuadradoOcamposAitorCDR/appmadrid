@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="44dp"
-        android:text="@string/cambioMail"
+        android:text="@string/cambioUsuario"
         android:textColor="@color/colorAccent"
         android:textColorHighlight="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"

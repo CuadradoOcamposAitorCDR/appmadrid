@@ -30,6 +30,8 @@
 
     <string name="nuevoMail">Nuevo Mail</string>
     <string name="nuevoUsuario">Nuevo Usuario</string>
+    <string name="usuarioActual">Usuario Actual</string>
+    <string name="usuarioCambio">Usuario</string>
     <string name="nuevaPass">Nueva Contraseña</string>
     <string name="passActual">Contraseña Actual</string>
     <string name="passCambio">Contraseña</string>

@@ -54,8 +54,10 @@ public class InicioSesionFragment extends Fragment {
                     // y luego ya se puede ir a la aplicacion
                     // se me han ocurrido unas cosas que estan de lujo ya te diré mañana
                     //tu ve haciendo las cosas de cuenta y tal necesitaras el usuario creado:
-                    //String id = modelo.getIdUsuario(nombre,pass)
-                    //Usuario user=Usuario.getusuario(id);
+
+                    String id = modelo.getIdUsuario(nombre,pass);
+                    Usuario user=Usuario.construirUsuario();
+                    user.setIdUsuario(id);
 
                     Intent intent = new Intent (getActivity(), AplicacionActivity.class);
                     startActivity(intent);

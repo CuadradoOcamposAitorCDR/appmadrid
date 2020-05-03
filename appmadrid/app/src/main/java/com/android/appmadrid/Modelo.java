@@ -129,7 +129,7 @@ public class Modelo extends SQLiteOpenHelper {
     public String getIdUsuario(String nombre, String pass){
         String id="";
         SQLiteDatabase db = modelo.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT id_user FROM "+NOMBRE_TABLA_USUARIOS+" WHERE name = "+nombre+" AND password = "+pass+" ",null);
+        Cursor c = db.rawQuery("SELECT id_user FROM "+NOMBRE_TABLA_USUARIOS+" WHERE name = '"+nombre+"' AND password = '"+pass+"' ",null);
         if (c.moveToFirst()){
             do {
                 id= c.getString(0);
@@ -289,19 +289,19 @@ public class Modelo extends SQLiteOpenHelper {
     //============LOS MÉTODOS DE LA OPCIÓN DE CUENTA!!!==========
     public void modificarNombreUsuario(String user, String id){
         SQLiteDatabase db = modelo.getReadableDatabase();
-        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET name = '"+user+"' WHERE id = "+id+"");
+        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET name = '"+user+"' WHERE id_user = '"+id+"'");
         db.close();
         Log.d("==>","Nombre modificado");
     }
     public void modificarEmailUsuario(String email, String id){
         SQLiteDatabase db = modelo.getReadableDatabase();
-        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET name = '"+email+"' WHERE id = "+id+"");
+        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET email = '"+email+"' WHERE id_user = '"+id+"'");
         db.close();
         Log.d("==>","Email modificado");
     }
     public void modificarPassUsuario(String pass, String id){
         SQLiteDatabase db = modelo.getReadableDatabase();
-        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET name = '"+pass+"' WHERE id = "+id+"");
+        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET password = '"+pass+"' WHERE id_user = '"+id+"'");
         db.close();
         Log.d("==>","Pass modificado");
     }

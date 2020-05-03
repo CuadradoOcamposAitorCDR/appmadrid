@@ -30,5 +30,18 @@
         app:layout_constraintEnd_toEndOf="@+id/editText_nuevoMail"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editText_nuevoMail"
+        app:layout_constraintTop_toBottomOf="@+id/editText_userCambioMail" />
+
+    <EditText
+        android:id="@+id/editText_userCambioMail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/usuarioCambio"
+        app:layout_constraintEnd_toEndOf="@+id/editText_nuevoMail"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/editText_nuevoMail"
         app:layout_constraintTop_toBottomOf="@+id/editText_nuevoMail" />
 </androidx.constraintlayout.widget.ConstraintLayout>

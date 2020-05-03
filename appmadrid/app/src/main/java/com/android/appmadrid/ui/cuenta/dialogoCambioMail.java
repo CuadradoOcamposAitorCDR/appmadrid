@@ -14,14 +14,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.appmadrid.Modelo;
 import com.android.appmadrid.R;
+import com.android.appmadrid.Usuario;
 
 public class dialogoCambioMail extends DialogFragment {
 
     AlertDialog.Builder builder;
-
+    Modelo modelo = Modelo.getModelo(getActivity());
+    Usuario usuario=Usuario.construirUsuario();
+    String idUsuario=usuario.getIdUsuario();
 
     @NonNull
     @Override
@@ -34,13 +39,27 @@ public class dialogoCambioMail extends DialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        View dialogview=inflater.inflate(R.layout.dialogo_cambio_usuario, null);
+        final View dialogview=inflater.inflate(R.layout.dialogo_cambio_mail, null);
         builder.setView(dialogview);
 
         builder.setTitle("Cambio de email")
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Toast.makeText(getActivity(), "Email cambiado", Toast.LENGTH_SHORT).show();
+
+                        //Cogemos los TextView de la vista y sacamos lo que ha introducido el usuario
+                        TextView usuario=(TextView) dialogview.findViewById(R.id.editText_userCambioMail);
+                        TextView pass=(TextView) dialogview.findViewById(R.id.editText_passCambioMail);
+                        TextView mail=(TextView) dialogview.findViewById(R.id.editText_nuevoMail);
+                        String inputUsuario=usuario.getText().toString();
+                        String inputPass=pass.getText().toString();
+                        String inputMail=mail.getText().toString();
+
+                        if (modelo.consultarUsuario(inputUsuario,inputPass)){
+                            modelo.modificarEmailUsuario(inputMail,idUsuario);
+                            Toast.makeText(getActivity(), "Email cambiado", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getActivity(), "Usuario o contraseña equivocada", Toast.LENGTH_SHORT).show();
+                        }
                         dialog.dismiss();
                     }
                 })

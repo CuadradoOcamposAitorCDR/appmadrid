@@ -1,14 +1,11 @@
 package com.android.appmadrid;
 
-import android.content.Context;
-
-class Usuario {
-    private static String idUsuario,nombre,pass,mail;
+public class Usuario {
+    private static String idUsuario;
 
     private static Usuario usuario=null;
 
-    private Usuario(String idUsuario){
-        this.idUsuario=idUsuario;
+    private Usuario(){
     }
 
     public static String getIdUsuario() {
@@ -19,9 +16,9 @@ class Usuario {
         Usuario.idUsuario = idUsuario;
     }
 
-    public static Usuario getUsuario(String idUsuario){
+    public static Usuario construirUsuario(){
      if (usuario==null){
-         usuario = new Usuario(idUsuario);
+         usuario = new Usuario();
      }
      return usuario;
     }
