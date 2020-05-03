@@ -22,7 +22,7 @@
         app:srcCompat="@drawable/ic_boton_search" />
 
     <ListView
-        android:id="@+id/listViewBusqueda"
+        android:id="@+id/listViewBusqueda1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

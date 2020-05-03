@@ -37,6 +37,8 @@ public class PrincipalInicioRegistro extends Fragment {
                 mListener.moveToFragment(fragmentRegistro);
             }
         });;
+        Modelo modelo=Modelo.getModelo(getActivity());
+        modelo.comprobarSiHayEventos();
         return view;
     }
 

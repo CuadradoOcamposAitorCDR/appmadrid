@@ -129,7 +129,7 @@ public class Modelo extends SQLiteOpenHelper {
     public String getIdUsuario(String nombre, String pass){
         String id="";
         SQLiteDatabase db = modelo.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT id_user FROM "+NOMBRE_TABLA_USUARIOS+" WHERE name = "+nombre+" AND password = "+pass+" ",null);
+        Cursor c = db.rawQuery("SELECT id_user FROM "+NOMBRE_TABLA_USUARIOS+" WHERE name = '"+nombre+"' AND password = '"+pass+"' ",null);
         if (c.moveToFirst()){
             do {
                 id= c.getString(0);
@@ -140,6 +140,20 @@ public class Modelo extends SQLiteOpenHelper {
         return id;
     }
 
+    //===============obtener mail del usuario=======================
+    public String getMailUsuario(String id){
+        String email="";
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT email FROM "+NOMBRE_TABLA_USUARIOS+" WHERE id_user = '"+id+"'",null);
+        if (c.moveToFirst()){
+            do {
+                email= c.getString(0);
+                Log.d("==>"," ID: "+email);
+            }while (c.moveToNext());
+        }
+        db.close();
+        return email;
+    }
     //===============Comprobar si hay eventos en la base de datos y si no pues a rellenar del api Eventos============================
     public void comprobarSiHayEventos(){
         SQLiteDatabase db = modelo.getReadableDatabase();
@@ -286,7 +300,8 @@ public class Modelo extends SQLiteOpenHelper {
                 for (int i = 0; i < fecha_inicio.length; i++) {
                             yearO = Integer.parseInt(fecha_inicio[0]);
                             monthO = Integer.parseInt(fecha_inicio[1]);
-                            dayO = Integer.parseInt(fecha_inicio[2]);
+                            String[] day = fecha_inicio[2].split(" ");
+                            dayO=Integer.parseInt(day[0]);
                 }
 
                 String[] fecha_final = eventos_Dend.split("-");
@@ -296,7 +311,64 @@ public class Modelo extends SQLiteOpenHelper {
                 for (int i = 0; i < fecha_final.length; i++) {
                     yearF = Integer.parseInt(fecha_final[0]);
                     monthF = Integer.parseInt(fecha_final[1]);
-                    dayF = Integer.parseInt(fecha_final[2]);
+                    String[] day = fecha_final[2].split(" ");
+                    dayF=Integer.parseInt(day[0]);
+                }
+
+                Boolean gratuito = false;
+                if (eventos_price == "0"){
+                    gratuito = false;
+                }else if( eventos_price == "1"){
+                    gratuito =  true;
+                }
+
+                Evento objetoEvento = new Evento(eventos_id,eventos_title,eventos_place,yearO,monthO,dayO,yearF,monthF,dayF,gratuito);
+
+                listaDeEventos.add(objetoEvento);
+
+            }while (c.moveToNext());
+        }
+
+        db.close();
+        return listaDeEventos;
+    }
+
+    //===============Obtener Eventos Favoritos en un array de objetos de tipo evento============================
+    public ArrayList<Evento> buscarEventosFavoritos(String userId){
+        ArrayList<Evento> listaDeEventos = new ArrayList<>();
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM fav INNER JOIN events ON id_event_fk=id_event WHERE id_user_fk='"+userId+"'",null);
+        if (c.moveToFirst()){
+            do {
+                String eventos_id= c.getString(2);
+                String eventos_title= c.getString(3);
+                String eventos_place= c.getString(4);
+                String eventos_Dstart= c.getString(5);
+                String eventos_Dend= c.getString(6);
+                String eventos_price= c.getString(7);
+
+
+
+                String[] fecha_inicio = eventos_Dstart.split("-");
+                int yearO = 0;
+                int monthO = 0;
+                int dayO = 0;
+                for (int i = 0; i < fecha_inicio.length; i++) {
+                    yearO = Integer.parseInt(fecha_inicio[0]);
+                    monthO = Integer.parseInt(fecha_inicio[1]);
+                    String[] day = fecha_inicio[2].split(" ");
+                    dayO=Integer.parseInt(day[0]);
+                }
+
+                String[] fecha_final = eventos_Dend.split("-");
+                int yearF = 0;
+                int monthF = 0;
+                int dayF = 0;
+                for (int i = 0; i < fecha_final.length; i++) {
+                    yearF = Integer.parseInt(fecha_final[0]);
+                    monthF = Integer.parseInt(fecha_final[1]);
+                    String[] day = fecha_final[2].split(" ");
+                    dayF=Integer.parseInt(day[0]);
                 }
 
                 Boolean gratuito = false;
@@ -383,13 +455,13 @@ public class Modelo extends SQLiteOpenHelper {
     }
     public void modificarEmailUsuario(String email, String id){
         SQLiteDatabase db = modelo.getReadableDatabase();
-        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET name = '"+email+"' WHERE id_user = '"+id+"'");
+        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET email = '"+email+"' WHERE id_user = '"+id+"'");
         db.close();
         Log.d("==>","Email modificado");
     }
     public void modificarPassUsuario(String pass, String id){
         SQLiteDatabase db = modelo.getReadableDatabase();
-        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET name = '"+pass+"' WHERE id_user = '"+id+"'");
+        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET password = '"+pass+"' WHERE id_user = '"+id+"'");
         db.close();
         Log.d("==>","Pass modificado");
     }

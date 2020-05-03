@@ -62,16 +62,20 @@ public class BuscarFragment extends Fragment {
 
         //Array de objeto Evento
         eventoList =new ArrayList<>();
-        eventoList.add(new Evento("1","Que bien cuando amanece","Arganzuela", 2020,5,02,2020,6,03,true,false));
-        eventoList.add(new Evento("2","Buenos días buenas tardes","Serrano", 2020,6,12,2020,6,12,true,true));
-        eventoList.add(new Evento("3","Por fin se acaba","Vallecas", 2020,5,30,2020,6,02,false,false));
 
+       /* Bundle resultadoBusqueda=getActivity().getIntent().getExtras();
+        eventoList= (List<Evento>) resultadoBusqueda.getArray("busquedaEventosPersonalizada");*/
+
+        /*eventoList.add(new Evento("1","Que bien cuando amanece","Arganzuela", 2020,5,02,2020,6,03,true,false));
+        eventoList.add(new Evento("2","Buenos días buenas tardes","Serrano", 2020,6,12,2020,6,12,true,true));
+        eventoList.add(new Evento("3","Por fin se acaba","Vallecas", 2020,5,30,2020,6,02,false,false));*/
+        eventoList=modelo.buscarEventos();
 
         final miAdaptadorBusqueda adaptadorBusqueda = new miAdaptadorBusqueda(this.getActivity(),
                 R.layout.busqueda_item,
                 eventoList);
 
-        listaBusqueda= (ListView) view.findViewById(R.id.listViewBusqueda);
+        listaBusqueda= (ListView) view.findViewById(R.id.listViewBusqueda1);
         listaBusqueda.setAdapter(adaptadorBusqueda);
 
         //Click en Estrella para cambiarla y (en futuro) acceder a base datos
@@ -82,7 +86,6 @@ public class BuscarFragment extends Fragment {
                 estrellaOn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        eventoList.get(position).setFavorito(false);
                         modelo.eliminarFav(idUser,eventoList.get(position).getIdEvento());
                         adaptadorBusqueda.notifyDataSetChanged();
                     }
@@ -92,7 +95,6 @@ public class BuscarFragment extends Fragment {
                 estrellaOff.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        eventoList.get(position).setFavorito(true);
                         modelo.insertarFav(idUser,eventoList.get(position).getIdEvento());
                         adaptadorBusqueda.notifyDataSetChanged();
                     }

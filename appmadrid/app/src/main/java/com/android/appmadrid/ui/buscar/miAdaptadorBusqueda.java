@@ -11,7 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.android.appmadrid.Modelo;
 import com.android.appmadrid.R;
+import com.android.appmadrid.Usuario;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -62,7 +64,13 @@ class miAdaptadorBusqueda extends ArrayAdapter<Evento> {
             textViewPrecio.setText("De pago");
         }
 
-        if(elementoActual.isFavorito()){
+        Modelo modelo= Modelo.getModelo(getContext());
+        Usuario usuario=Usuario.construirUsuario();
+        String idUsuario=usuario.getIdUsuario();
+        String idEvento= elementoActual.getIdEvento();
+
+
+        if(modelo.comprobarFavorito(idUsuario,idEvento)){
             imageViewFavoritoOn.setVisibility(View.VISIBLE);
             imageViewFavoritoOff.setVisibility(View.INVISIBLE);
         }else{

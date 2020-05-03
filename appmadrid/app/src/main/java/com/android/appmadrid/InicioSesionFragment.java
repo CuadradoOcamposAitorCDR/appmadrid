@@ -58,6 +58,7 @@ public class InicioSesionFragment extends Fragment {
                     String id = modelo.getIdUsuario(nombre,pass);
                     Usuario user=Usuario.construirUsuario();
                     user.setIdUsuario(id);
+                    user.setNombre(nombre);
 
                     Intent intent = new Intent (getActivity(), AplicacionActivity.class);
                     startActivity(intent);

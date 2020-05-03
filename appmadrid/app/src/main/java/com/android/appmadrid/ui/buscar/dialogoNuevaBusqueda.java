@@ -1,9 +1,11 @@
 package com.android.appmadrid.ui.buscar;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -21,12 +23,16 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.appmadrid.AplicacionActivity;
 import com.android.appmadrid.ConexionFragmentsInicio;
+import com.android.appmadrid.Modelo;
 import com.android.appmadrid.R;
+
+import java.util.ArrayList;
 
 public class dialogoNuevaBusqueda extends DialogFragment {
     AlertDialog.Builder builder;
-
+    Modelo modelo = Modelo.getModelo(getActivity());
 
     @NonNull
     @Override
@@ -45,7 +51,12 @@ public class dialogoNuevaBusqueda extends DialogFragment {
         builder.setTitle("Búsqueda")
                 .setPositiveButton("Buscar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        /*modelo.comprobarSiHayEventos();
+                        ArrayList<Evento> busquedaEventoPersonalizada=modelo.buscarEventos();
                         Toast.makeText(getActivity(), "Búsqueda realizada", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent()
+                                .putExtra("busquedaEventosPersonalizada",busquedaEventoPersonalizada);
+                        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);*/
                         dialog.dismiss();
                     }
                 })
@@ -67,13 +78,15 @@ public class dialogoNuevaBusqueda extends DialogFragment {
         return builder.create();
     }
 
+    dialogoNuevaBusqueda listener;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            /*mListener = (OnNuevaAveriaListener) context;*/
+            //listener=(dialogoNuevaBusqueda) context;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(context.toString()

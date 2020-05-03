@@ -22,7 +22,7 @@
     <string name="menu_cuenta">Cuenta</string>
 
 
-    <string name="usuarioCuenta">Cuenta:</string>
+    <string name="usuarioCuenta">Usuario:</string>
     <string name="mailCuenta">Mail:</string>
     <string name="cambioUsuario">Cambiar nombre de usuario</string>
     <string name="cambioPassword">Cambiar contraseña</string>
