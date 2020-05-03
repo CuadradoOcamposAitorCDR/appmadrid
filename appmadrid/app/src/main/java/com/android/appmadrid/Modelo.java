@@ -129,7 +129,7 @@ public class Modelo extends SQLiteOpenHelper {
     public String getIdUsuario(String nombre, String pass){
         String id="";
         SQLiteDatabase db = modelo.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT id_user FROM "+NOMBRE_TABLA_USUARIOS+" WHERE name = '"+nombre+"' AND password = '"+pass+"' ",null);
+        Cursor c = db.rawQuery("SELECT id_user FROM "+NOMBRE_TABLA_USUARIOS+" WHERE name = "+nombre+" AND password = "+pass+" ",null);
         if (c.moveToFirst()){
             do {
                 id= c.getString(0);
@@ -262,7 +262,7 @@ public class Modelo extends SQLiteOpenHelper {
     }
 
     //===============Obtener Eventos en un array de objetos de tipo evento============================
-    //=============SIN TERMINAR===================================
+    //=============Casi terminado===================================
     // aqui estaria bien hacer una sobrecarga de métodos para buscar con parametros o sin ellos
     public ArrayList<Evento> buscarEventos(){
         ArrayList<Evento> listaDeEventos = new ArrayList<>();
@@ -270,20 +270,108 @@ public class Modelo extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT * FROM "+NOMBRE_TABLA_EVENTOS+"",null);
         if (c.moveToFirst()){
             do {
+                String eventos_id= c.getString(0);
+                String eventos_title= c.getString(1);
+                String eventos_place= c.getString(2);
+                String eventos_Dstart= c.getString(3);
+                String eventos_Dend= c.getString(4);
+                String eventos_price= c.getString(5);
 
 
-                String id_eventos= c.getString(0);
-                String title_eventos= c.getString(1);
-                String column_2= c.getString(2);
-                String column_3= c.getString(3);
-                String column_4= c.getString(4);
-                String column_5= c.getString(5);
+
+                String[] fecha_inicio = eventos_Dstart.split("-");
+                int yearO = 0;
+                int monthO = 0;
+                int dayO = 0;
+                for (int i = 0; i < fecha_inicio.length; i++) {
+                            yearO = Integer.parseInt(fecha_inicio[0]);
+                            monthO = Integer.parseInt(fecha_inicio[1]);
+                            dayO = Integer.parseInt(fecha_inicio[2]);
+                }
+
+                String[] fecha_final = eventos_Dend.split("-");
+                int yearF = 0;
+                int monthF = 0;
+                int dayF = 0;
+                for (int i = 0; i < fecha_final.length; i++) {
+                    yearF = Integer.parseInt(fecha_final[0]);
+                    monthF = Integer.parseInt(fecha_final[1]);
+                    dayF = Integer.parseInt(fecha_final[2]);
+                }
+
+                Boolean gratuito = false;
+                if (eventos_price == "0"){
+                    gratuito = false;
+                }else if( eventos_price == "1"){
+                    gratuito =  true;
+                }
+
+                Evento objetoEvento = new Evento(eventos_id,eventos_title,eventos_place,yearO,monthO,dayO,yearF,monthF,dayF,gratuito);
+
+                listaDeEventos.add(objetoEvento);
 
             }while (c.moveToNext());
         }
+
         db.close();
         return listaDeEventos;
     }
+
+    //=====Buscar con un parámetro====================
+    public ArrayList<Evento> buscarEventos(String titulo){
+        ArrayList<Evento> listaDeEventos = new ArrayList<>();
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM "+NOMBRE_TABLA_EVENTOS+" WHERE title = '"+titulo+"'",null);
+        if (c.moveToFirst()){
+            do {
+                String eventos_id= c.getString(0);
+                String eventos_title= c.getString(1);
+                String eventos_place= c.getString(2);
+                String eventos_Dstart= c.getString(3);
+                String eventos_Dend= c.getString(4);
+                String eventos_price= c.getString(5);
+
+
+
+                String[] fecha_inicio = eventos_Dstart.split("-");
+                int yearO = 0;
+                int monthO = 0;
+                int dayO = 0;
+                for (int i = 0; i < fecha_inicio.length; i++) {
+                    yearO = Integer.parseInt(fecha_inicio[0]);
+                    monthO = Integer.parseInt(fecha_inicio[1]);
+                    dayO = Integer.parseInt(fecha_inicio[2]);
+                }
+
+                String[] fecha_final = eventos_Dend.split("-");
+                int yearF = 0;
+                int monthF = 0;
+                int dayF = 0;
+                for (int i = 0; i < fecha_final.length; i++) {
+                    yearF = Integer.parseInt(fecha_final[0]);
+                    monthF = Integer.parseInt(fecha_final[1]);
+                    dayF = Integer.parseInt(fecha_final[2]);
+                }
+
+                Boolean gratuito = false;
+                if (eventos_price == "0"){
+                    gratuito = false;
+                }else if( eventos_price == "1"){
+                    gratuito =  true;
+                }
+
+                Evento objetoEvento = new Evento(eventos_id,eventos_title,eventos_place,yearO,monthO,dayO,yearF,monthF,dayF,gratuito);
+
+                listaDeEventos.add(objetoEvento);
+
+            }while (c.moveToNext());
+        }
+
+        db.close();
+        return listaDeEventos;
+    }
+    //===========================================================
+    //===========================================================
 
     //=============Modificar usuario=============================
     //============LOS MÉTODOS DE LA OPCIÓN DE CUENTA!!!==========
@@ -295,13 +383,13 @@ public class Modelo extends SQLiteOpenHelper {
     }
     public void modificarEmailUsuario(String email, String id){
         SQLiteDatabase db = modelo.getReadableDatabase();
-        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET email = '"+email+"' WHERE id_user = '"+id+"'");
+        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET name = '"+email+"' WHERE id_user = '"+id+"'");
         db.close();
         Log.d("==>","Email modificado");
     }
     public void modificarPassUsuario(String pass, String id){
         SQLiteDatabase db = modelo.getReadableDatabase();
-        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET password = '"+pass+"' WHERE id_user = '"+id+"'");
+        db.execSQL("UPDATE "+NOMBRE_TABLA_USUARIOS+" SET name = '"+pass+"' WHERE id_user = '"+id+"'");
         db.close();
         Log.d("==>","Pass modificado");
     }
@@ -309,14 +397,14 @@ public class Modelo extends SQLiteOpenHelper {
     //==================insertar Favoritos======================
     public void insertarFav(String userID, String eventID){
         SQLiteDatabase db = modelo.getWritableDatabase();
-        db.execSQL("INSERT INTO "+NOMBRE_TABLA_FAVORITOS+" (id_user_fk, id_event_fk) VALUES ("+userID+","+eventID+")");
+        db.execSQL("INSERT INTO "+NOMBRE_TABLA_FAVORITOS+" (id_user_fk, id_event_fk) VALUES ('"+userID+"','"+eventID+"')");
         Log.d("==>","Evento insertado como favorito");
         db.close();
     }
     //================eliminar Favorito=========================
     public void eliminarFav(String userID, String eventID){
         SQLiteDatabase db = modelo.getWritableDatabase();
-        db.execSQL("DELETE FROM "+NOMBRE_TABLA_FAVORITOS+" WHERE id_user_fk = "+userID+" AND id_event_fk = "+eventID+" ");
+        db.execSQL("DELETE FROM "+NOMBRE_TABLA_FAVORITOS+" WHERE id_user_fk = '"+userID+"' AND id_event_fk = '"+eventID+"' ");
         Log.d("==>","Evento eliminado de favorito");
         db.close();
     }
@@ -325,7 +413,7 @@ public class Modelo extends SQLiteOpenHelper {
     public Boolean comprobarFavorito(String userID, String eventID){
         Boolean favorito;
         SQLiteDatabase db = modelo.getReadableDatabase();
-        String query = "SELECT id_event_fk, id_user_fk FROM fav WHERE id_user_fk = "+userID+" AND id_event_fk = "+eventID+" ";
+        String query = "SELECT id_event_fk, id_user_fk FROM fav WHERE id_user_fk = '"+userID+"' AND id_event_fk = '"+eventID+"' ";
         Cursor c = db.rawQuery(query,null);
         if (c.moveToFirst()){
             favorito = true;
