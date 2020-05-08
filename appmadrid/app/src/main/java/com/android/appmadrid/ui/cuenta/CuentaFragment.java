@@ -1,16 +1,20 @@
 package com.android.appmadrid.ui.cuenta;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.appmadrid.Modelo;
 import com.android.appmadrid.R;
@@ -18,7 +22,6 @@ import com.android.appmadrid.Usuario;
 
 public class CuentaFragment extends Fragment {
 
-    //private CuentaViewModel cuentaViewModel;
     TextView cambioUsuario;
     TextView cambioPassword;
     TextView cambioMail;
@@ -39,13 +42,12 @@ public class CuentaFragment extends Fragment {
         });
         return root;*/
         View view = inflater.inflate(R.layout.fragment_cuenta, container, false);
-
         Modelo modelo=Modelo.getModelo(getActivity());
         Usuario user= Usuario.construirUsuario();
         String userId=user.getIdUsuario();
 
         nombreUsuario=(TextView) view.findViewById(R.id.textView_nombreUsuarioCuenta);
-        nombreUsuario.setText(user.getNombre());
+        nombreUsuario.setText(modelo.getNombreUsuario(userId));
 
         mailUsuario=(TextView) view.findViewById(R.id.textView_tuMailCuenta);
         mailUsuario.setText(modelo.getMailUsuario(userId));

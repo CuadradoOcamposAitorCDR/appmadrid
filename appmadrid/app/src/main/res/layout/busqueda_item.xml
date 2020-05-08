@@ -40,7 +40,7 @@
         android:id="@+id/textView_fechaBusqueda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="60dp"
         android:text="TextView"
         card_view:layout_constraintStart_toEndOf="@+id/textView_precioBusqueda"
         card_view:layout_constraintTop_toTopOf="@+id/textView_precioBusqueda" />
@@ -68,5 +68,26 @@
         card_view:layout_constraintTop_toTopOf="@+id/textView_tituloBusqueda"
         card_view:layout_constraintVertical_bias="0.463"
         card_view:srcCompat="@drawable/ic_estrella_marcada_amarilla_24dp" />
+
+    <TextView
+        android:id="@+id/textView_fechaFinBusqueda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        card_view:layout_constraintBottom_toBottomOf="@+id/textView_precioBusqueda"
+        card_view:layout_constraintStart_toEndOf="@+id/textView_guionFechaBusqueda"
+        card_view:layout_constraintTop_toTopOf="@+id/textView_precioBusqueda"
+        card_view:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView_guionFechaBusqueda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/guion_fecha"
+        card_view:layout_constraintBottom_toBottomOf="@+id/textView_fechaBusqueda"
+        card_view:layout_constraintStart_toEndOf="@+id/textView_fechaBusqueda"
+        card_view:layout_constraintTop_toTopOf="@+id/textView_fechaBusqueda" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

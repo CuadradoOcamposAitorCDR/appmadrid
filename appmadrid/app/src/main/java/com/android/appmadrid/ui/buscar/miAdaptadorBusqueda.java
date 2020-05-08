@@ -51,6 +51,7 @@ class miAdaptadorBusqueda extends ArrayAdapter<Evento> {
         TextView textViewDistrito=v.findViewById(R.id.textView_distritoBusqueda);
         TextView textViewFecha=v.findViewById(R.id.textView_fechaBusqueda);
         TextView textViewPrecio=v.findViewById(R.id.textView_precioBusqueda);
+        TextView textViewFechaFin=v.findViewById(R.id.textView_fechaFinBusqueda);
         ImageView imageViewFavoritoOff=v.findViewById(R.id.imageView_favoritoOff);
         ImageView imageViewFavoritoOn=v.findViewById(R.id.imageView_favoritoOn);
 
@@ -58,10 +59,14 @@ class miAdaptadorBusqueda extends ArrayAdapter<Evento> {
         textViewTitulo.setText(elementoActual.getTitulo());
         textViewDistrito.setText(elementoActual.getCalle());
 
-        Date fecha=elementoActual.getFechaInicio();
         DateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy");
+        Date fecha=elementoActual.getFechaInicio();
         String fechaInicio=dateFormat.format(fecha);
         textViewFecha.setText(fechaInicio);
+
+        Date fechaFin=elementoActual.getFechaFin();
+        String fechaFinal=dateFormat.format(fechaFin);
+        textViewFechaFin.setText(fechaFinal);
 
         if(elementoActual.isGratuito()){
             textViewPrecio.setText("Gratuito");

@@ -41,7 +41,7 @@
         android:id="@+id/textView_fechaFavorito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="60dp"
         android:text="TextView"
         card_view:layout_constraintStart_toEndOf="@+id/textView_precioFavorito"
         card_view:layout_constraintTop_toTopOf="@+id/textView_precioFavorito" />
@@ -66,5 +66,26 @@
         card_view:layout_constraintStart_toEndOf="@+id/textView_tituloFavorito"
         card_view:layout_constraintTop_toTopOf="@+id/textView_tituloFavorito"
         card_view:srcCompat="@drawable/ic_eliminar_red_24dp" />
+
+    <TextView
+        android:id="@+id/textView_fechaFinFavorito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        card_view:layout_constraintBottom_toBottomOf="@+id/textView_precioFavorito"
+        card_view:layout_constraintStart_toEndOf="@+id/textView_guionFechaFavorito"
+        card_view:layout_constraintTop_toTopOf="@+id/textView_precioFavorito"
+        card_view:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView_guionFechaFavorito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/guion_fecha"
+        card_view:layout_constraintBottom_toBottomOf="@+id/textView_fechaBusqueda"
+        card_view:layout_constraintStart_toEndOf="@+id/textView_fechaFavorito"
+        card_view:layout_constraintTop_toTopOf="@+id/textView_fechaFavorito" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

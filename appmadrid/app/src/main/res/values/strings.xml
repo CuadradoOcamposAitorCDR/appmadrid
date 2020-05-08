@@ -5,16 +5,12 @@
     <string name="boton_registro">REGISTRO</string>
     <string name="slogan">¡Explora todo lo que Madrid tiene para ti!</string>
     <string name="introduce_usuario">Usuario</string>
-    <string name="introduce_contrasena">Constraseña</string>
+    <string name="introduce_contrasena">Contraseña</string>
     <string name="introduce_mail">Mail</string>
     <string name="cancelar">Cancelar</string>
     <string name="busqueda_titulo">Título</string>
-    <string name="busqueda_fecha">Inicio:DD/MM/AAAA</string>
 
-    <string-array name="gratuito_array">
-        <item>Gratis</item>
-        <item>De Pago</item>
-    </string-array>
+    <string name="guion_fecha">-</string>
 
     <string name="nav_header_title">Nombre usuario</string>
     <string name="menu_inicio">Inicio</string>

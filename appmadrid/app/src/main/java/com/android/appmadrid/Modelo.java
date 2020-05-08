@@ -148,11 +148,24 @@ public class Modelo extends SQLiteOpenHelper {
         if (c.moveToFirst()){
             do {
                 email= c.getString(0);
-                Log.d("==>"," ID: "+email);
+                Log.d("==>"," Mail: "+email);
             }while (c.moveToNext());
         }
         db.close();
         return email;
+    }
+    public String getNombreUsuario(String id){
+        String user="";
+        SQLiteDatabase db = modelo.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT name FROM "+NOMBRE_TABLA_USUARIOS+" WHERE id_user = '"+id+"'",null);
+        if (c.moveToFirst()){
+            do {
+                user= c.getString(0);
+                Log.d("==>"," User: "+user);
+            }while (c.moveToNext());
+        }
+        db.close();
+        return user;
     }
     //===============Comprobar si hay eventos en la base de datos y si no pues a rellenar del api Eventos============================
     public void comprobarSiHayEventos(){
@@ -316,9 +329,9 @@ public class Modelo extends SQLiteOpenHelper {
                 }
 
                 Boolean gratuito = false;
-                if (eventos_price == "0"){
+                if (eventos_price.equals("1")){
                     gratuito = false;
-                }else if( eventos_price == "1"){
+                }else if( eventos_price.equals("0")){
                     gratuito =  true;
                 }
 
@@ -396,12 +409,12 @@ public class Modelo extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT * FROM "+NOMBRE_TABLA_EVENTOS+" WHERE title = '"+titulo+"'",null);
         if (c.moveToFirst()){
             do {
-                String eventos_id= c.getString(0);
-                String eventos_title= c.getString(1);
-                String eventos_place= c.getString(2);
-                String eventos_Dstart= c.getString(3);
-                String eventos_Dend= c.getString(4);
-                String eventos_price= c.getString(5);
+                String eventos_id= c.getString(2);
+                String eventos_title= c.getString(3);
+                String eventos_place= c.getString(4);
+                String eventos_Dstart= c.getString(5);
+                String eventos_Dend= c.getString(6);
+                String eventos_price= c.getString(7);
 
 
 
@@ -412,7 +425,8 @@ public class Modelo extends SQLiteOpenHelper {
                 for (int i = 0; i < fecha_inicio.length; i++) {
                     yearO = Integer.parseInt(fecha_inicio[0]);
                     monthO = Integer.parseInt(fecha_inicio[1]);
-                    dayO = Integer.parseInt(fecha_inicio[2]);
+                    String[] day = fecha_inicio[2].split(" ");
+                    dayO=Integer.parseInt(day[0]);
                 }
 
                 String[] fecha_final = eventos_Dend.split("-");
@@ -422,7 +436,8 @@ public class Modelo extends SQLiteOpenHelper {
                 for (int i = 0; i < fecha_final.length; i++) {
                     yearF = Integer.parseInt(fecha_final[0]);
                     monthF = Integer.parseInt(fecha_final[1]);
-                    dayF = Integer.parseInt(fecha_final[2]);
+                    String[] day = fecha_final[2].split(" ");
+                    dayF=Integer.parseInt(day[0]);
                 }
 
                 Boolean gratuito = false;

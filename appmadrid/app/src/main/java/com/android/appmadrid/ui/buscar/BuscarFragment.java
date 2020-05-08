@@ -1,5 +1,8 @@
 package com.android.appmadrid.ui.buscar;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +14,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.appmadrid.Modelo;
 import com.android.appmadrid.R;
@@ -27,8 +33,6 @@ public class BuscarFragment extends Fragment {
     //private BuscarViewModel buscarViewModel;
     ListView listaBusqueda;
     List<Evento> eventoList;
-    ImageView estrellaOn;
-    ImageView estrellaOff;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -62,11 +66,6 @@ public class BuscarFragment extends Fragment {
 
         //Array de objeto Evento
         eventoList =new ArrayList<>();
-
-       /* Bundle resultadoBusqueda=getActivity().getIntent().getExtras();
-        eventoList= (List<Evento>) resultadoBusqueda.getArray("busquedaEventosPersonalizada");*/
-
-
         eventoList=modelo.buscarEventos();
 
         final miAdaptadorBusqueda adaptadorBusqueda = new miAdaptadorBusqueda(this.getActivity(),
@@ -75,7 +74,11 @@ public class BuscarFragment extends Fragment {
 
         listaBusqueda= (ListView) view.findViewById(R.id.listViewBusqueda1);
         listaBusqueda.setAdapter(adaptadorBusqueda);
+        adaptadorBusqueda.notifyDataSetChanged();
+
 
         return view;
     }
+
+
 }

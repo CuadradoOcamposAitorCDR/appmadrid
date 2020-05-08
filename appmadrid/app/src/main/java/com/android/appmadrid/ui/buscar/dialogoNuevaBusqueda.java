@@ -15,48 +15,58 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.util.EventLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.appmadrid.AplicacionActivity;
 import com.android.appmadrid.ConexionFragmentsInicio;
 import com.android.appmadrid.Modelo;
 import com.android.appmadrid.R;
+import com.android.appmadrid.Usuario;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class dialogoNuevaBusqueda extends DialogFragment {
     AlertDialog.Builder builder;
-    Modelo modelo = Modelo.getModelo(getActivity());
+    Modelo modelo=Modelo.getModelo(getActivity());
+    private EditText busquedaTitulo;
+
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+
         // Use the Builder class for convenient dialog construction
         builder = new AlertDialog.Builder(getActivity());
 
         // Get the layout inflater
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        final LayoutInflater inflater = requireActivity().getLayoutInflater();
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        View dialogview=inflater.inflate(R.layout.dialogo_nueva_busqueda, null);
+        final View dialogview=inflater.inflate(R.layout.dialogo_nueva_busqueda, null);
         builder.setView(dialogview);
 
         builder.setTitle("Búsqueda")
                 .setPositiveButton("Buscar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        /*modelo.comprobarSiHayEventos();
-                        ArrayList<Evento> busquedaEventoPersonalizada=modelo.buscarEventos();
-                        Toast.makeText(getActivity(), "Búsqueda realizada", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent()
-                                .putExtra("busquedaEventosPersonalizada",busquedaEventoPersonalizada);
-                        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);*/
+                        busquedaTitulo= (EditText) dialogview.findViewById(R.id.editText_busquedaTitulo);
+                        String titulo= busquedaTitulo.getText().toString();
+                        /*List<Evento> hola= new ArrayList<>();
+                        hola=modelo.buscarEventos(titulo);*/
+                        Intent i= new Intent();
+                        //i.putExtra("sdf",hola);
+                        //Toast.makeText(getActivity(), "Texto "+ hola.size(), Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 })
@@ -66,13 +76,6 @@ public class dialogoNuevaBusqueda extends DialogFragment {
                         dialog.dismiss();
                     }
                 });
-
-
-        //Spinner
-        Spinner spinnerGratuito=(Spinner) dialogview.findViewById(R.id.spinner_busquedaGratutito);
-        ArrayAdapter<CharSequence> adapterGratuito=ArrayAdapter.createFromResource(this.getActivity(),R.array.gratuito_array, R.layout.support_simple_spinner_dropdown_item);
-        adapterGratuito.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinnerGratuito.setAdapter(adapterGratuito);
 
         // Create the AlertDialog object and return it
         return builder.create();

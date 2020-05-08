@@ -55,6 +55,7 @@ class miAdaptadorFavoritos extends ArrayAdapter<Evento> {
         TextView textViewDistrito=v.findViewById(R.id.textView_distritoFavorito);
         TextView textViewFecha=v.findViewById(R.id.textView_fechaFavorito);
         TextView textViewPrecio=v.findViewById(R.id.textView_precioFavorito);
+        TextView textViewFechaFin=v.findViewById(R.id.textView_fechaFinFavorito);
         ImageView imageViewCalendario=v.findViewById(R.id.imageView_calendarioFavorito);
         ImageView imageViewEliminar=v.findViewById(R.id.imageView_eliminarFavorito);
 
@@ -62,10 +63,14 @@ class miAdaptadorFavoritos extends ArrayAdapter<Evento> {
         textViewTitulo.setText(elementoActual.getTitulo());
         textViewDistrito.setText(elementoActual.getCalle());
 
-        Date fecha=elementoActual.getFechaInicio();
         DateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy");
+        Date fecha=elementoActual.getFechaInicio();
         String fechaInicio=dateFormat.format(fecha);
         textViewFecha.setText(fechaInicio);
+
+        Date fechaFin=elementoActual.getFechaFin();
+        String fechaFinal=dateFormat.format(fechaFin);
+        textViewFechaFin.setText(fechaFinal);
 
         if(elementoActual.isGratuito()){
             textViewPrecio.setText("Gratuito");
@@ -80,7 +85,8 @@ class miAdaptadorFavoritos extends ArrayAdapter<Evento> {
                         .setData(CalendarContract.Events.CONTENT_URI)
                         .putExtra(CalendarContract.Events.TITLE,favoritosList.get(position).getTitulo())
                         .putExtra(CalendarContract.Events.EVENT_LOCATION,favoritosList.get(position).getCalle())
-                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,favoritosList.get(position).getFechaInicio().getTime());
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,favoritosList.get(position).getFechaInicio().getTime())
+                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME,favoritosList.get(position).getFechaFin().getTime());
                 ctx.startActivity(intentCalendario);
             }
         });

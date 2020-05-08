@@ -3,7 +3,7 @@ package com.android.appmadrid.ui.buscar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class Evento {
+public class Evento{
     private String idEvento,titulo, calle;
     private Date fechaInicio,fechaFin;
     private boolean gratuito/*,favorito*/;
