@@ -1,17 +1,11 @@
 package com.android.appmadrid;
 
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.View;
-import android.view.Menu;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -20,7 +14,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.util.zip.Inflater;
 
 public class AplicacionActivity extends AppCompatActivity{
 
@@ -32,18 +25,16 @@ public class AplicacionActivity extends AppCompatActivity{
         setContentView(R.layout.activity_aplicacion);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        /*FloatingActionButton fab = findViewById(R.id.botonBuscar);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
+        Usuario usuario=Usuario.construirUsuario();
+        String nombreUsuario=usuario.getNombre();
+        View hView=navigationView.getHeaderView(0);
+        TextView nombreUsuarioMenu=(TextView) hView.findViewById(R.id.nombreUsuarioMenu);
+        nombreUsuarioMenu.setText(nombreUsuario);
+
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_inicio, R.id.nav_buscar, R.id.nav_cuenta)
                 .setDrawerLayout(drawer)
@@ -53,21 +44,8 @@ public class AplicacionActivity extends AppCompatActivity{
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
-        Usuario usuario=Usuario.construirUsuario();
-        String nombreUsuario=usuario.getNombre();
-        View hView=navigationView.getHeaderView(0);
-        TextView nombreUsuarioMenu=(TextView) hView.findViewById(R.id.nombreUsuarioMenu);
-        nombreUsuarioMenu.setText(nombreUsuario);
-    }
 
-   /*
-    //Tiene el menú de tres puntos superior donde está la opción Settings, su contenido se controla desde menu.aplicacion.xml
-   @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.aplicacion, menu);
-        return true;
-    }*/
+    }
 
 
     @Override

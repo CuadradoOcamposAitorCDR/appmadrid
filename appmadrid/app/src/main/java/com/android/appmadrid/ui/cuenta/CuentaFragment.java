@@ -1,20 +1,13 @@
 package com.android.appmadrid.ui.cuenta;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.appmadrid.Modelo;
 import com.android.appmadrid.R;
@@ -30,17 +23,6 @@ public class CuentaFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
-       /* cuentaViewModel =
-                ViewModelProviders.of(this).get(CuentaViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_cuenta, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        cuentaViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;*/
         View view = inflater.inflate(R.layout.fragment_cuenta, container, false);
         Modelo modelo=Modelo.getModelo(getActivity());
         Usuario user= Usuario.construirUsuario();

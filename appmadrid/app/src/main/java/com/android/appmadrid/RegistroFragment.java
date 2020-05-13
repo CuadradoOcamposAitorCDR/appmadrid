@@ -1,6 +1,7 @@
 package com.android.appmadrid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -55,9 +56,9 @@ public class RegistroFragment extends Fragment {
                 modelo.insertarUsuario(nombre,correo,pass);
 
                 //Vuelta a la activity inicial
-                Fragment fragmentPrincipal = new PrincipalInicioRegistro();
-                mListener.moveToFragment(fragmentPrincipal);
-                Toast.makeText(getActivity(), "Registro realizado", Toast.LENGTH_SHORT).show();
+               Fragment fragmentPrincipal = new PrincipalInicioRegistro();
+               mListener.moveToFragment(fragmentPrincipal);
+               Toast.makeText(getActivity(), "Registro realizado", Toast.LENGTH_SHORT).show();
 
             }
         });

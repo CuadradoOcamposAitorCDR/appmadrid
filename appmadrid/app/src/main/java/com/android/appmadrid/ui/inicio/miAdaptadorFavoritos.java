@@ -23,7 +23,6 @@ import com.android.appmadrid.ui.buscar.Evento;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 class miAdaptadorFavoritos extends ArrayAdapter<Evento> {

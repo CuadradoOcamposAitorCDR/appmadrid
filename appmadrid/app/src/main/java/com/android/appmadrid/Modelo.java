@@ -329,9 +329,9 @@ public class Modelo extends SQLiteOpenHelper {
                 }
 
                 Boolean gratuito = false;
-                if (eventos_price.equals("1")){
+                if (eventos_price.equals("0")){
                     gratuito = false;
-                }else if( eventos_price.equals("0")){
+                }else if( eventos_price.equals("1")){
                     gratuito =  true;
                 }
 
@@ -385,9 +385,9 @@ public class Modelo extends SQLiteOpenHelper {
                 }
 
                 Boolean gratuito = false;
-                if (eventos_price == "0"){
+                if (eventos_price.equals("0")){
                     gratuito = false;
-                }else if( eventos_price == "1"){
+                }else if( eventos_price.equals("1")){
                     gratuito =  true;
                 }
 
@@ -441,9 +441,9 @@ public class Modelo extends SQLiteOpenHelper {
                 }
 
                 Boolean gratuito = false;
-                if (eventos_price == "0"){
+                if (eventos_price.equals("0")){
                     gratuito = false;
-                }else if( eventos_price == "1"){
+                }else if( eventos_price.equals("1")){
                     gratuito =  true;
                 }
 

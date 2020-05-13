@@ -58,4 +58,5 @@ public class PrincipalInicioRegistro extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
 }

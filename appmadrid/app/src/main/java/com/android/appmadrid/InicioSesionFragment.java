@@ -35,6 +35,7 @@ public class InicioSesionFragment extends Fragment {
                 mListener.moveToFragment(fragmentPrincipal);
             }
         });;
+
         campo_nombre = (EditText) view.findViewById(R.id.editText_usuario_inicio);
         campo_pass = (EditText) view.findViewById(R.id.editText_contrasena_inicio);
         fragment_app= (Button) view.findViewById(R.id.button_inicio);
@@ -48,12 +49,6 @@ public class InicioSesionFragment extends Fragment {
                 Modelo modelo = Modelo.getModelo(getActivity());
 
                 if (modelo.consultarUsuario(nombre,pass)){
-
-                    //he comentado el modelo lo mas claro posible para que se entienda de lujo :D
-                    // aqui hay que crear el usuario con los singleton como en las cartas
-                    // y luego ya se puede ir a la aplicacion
-                    // se me han ocurrido unas cosas que estan de lujo ya te diré mañana
-                    //tu ve haciendo las cosas de cuenta y tal necesitaras el usuario creado:
 
                     String id = modelo.getIdUsuario(nombre,pass);
                     Usuario user=Usuario.construirUsuario();
@@ -73,7 +68,7 @@ public class InicioSesionFragment extends Fragment {
         return view;
     }
 
-    @Override
+   @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof ConexionFragmentsInicio) {
